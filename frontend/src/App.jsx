@@ -1,9 +1,13 @@
-import React from 'react'
-
+import React from "react";
+import Routing from "./routes/Routing";
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
-    <div className='bg-red-400'>App</div>
-  )
+    <>
+      <Toaster />
+      <Routing />
+    </>
+  );
 }
 
-export default App
+export default App;

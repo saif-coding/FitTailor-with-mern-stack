@@ -1,0 +1,53 @@
+const UserModel = require("../models/userModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const registeUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: "user already avilable" });
+    }
+    const hashpassword = await bcrypt.hash(password, 10);
+    const newUser = new UserModel({
+      name,
+      email,
+      password: hashpassword,
+    });
+    newUser.save();
+    return res.status(201).json({ message: "user register succssfuly " });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "failed to register user" });
+  }
+};
+
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "email is wrong" });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(400).json({ message: "password is wrong" });
+    }
+    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+      expiresIn: "7d",
+    });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // only on HTTPS in production
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    return res.status(200).json({ message: "login successfully" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "login error" });
+  }
+};
+
+module.exports = { registeUser, loginUser };
