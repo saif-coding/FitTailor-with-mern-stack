@@ -1,10 +1,14 @@
-const UserModel = require("../models/userModel");
+const { UserModel, registeValidate } = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const registeUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    let error = registeValidate({ name, email, password });
+    if (error) {
+      return res.status(400).json({ message: error.message });
+    }
     const user = await UserModel.findOne({ email });
     if (user) {
       return res.status(400).json({ message: "user already avilable" });

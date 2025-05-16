@@ -22,7 +22,8 @@ function Login() {
     try {
       const result = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/users/login`,
-        loginData
+        loginData,
+        { withCredentials: true }
       );
       if (result.status == 200) {
         toast.success(result.data.message);
