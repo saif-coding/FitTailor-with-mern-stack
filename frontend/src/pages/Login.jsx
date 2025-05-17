@@ -38,11 +38,11 @@ function Login() {
     <div className="w-full h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="max-w-96 w-full text-center border border-gray-400 rounded-2xl px-8 bg-white"
+        className="max-w-96 w-full text-center border border-gray-400 rounded-2xl px-8 bg-[#F5F5F8]"
       >
-        <h1 className="text-gray-900 text-3xl mt-10 font-medium">Login</h1>
+        <h1 className="text-[#1E2A38] text-3xl mt-10 font-medium">Login</h1>
         <p className="text-gray-500 text-sm mt-2">Please sign in to continue</p>
-        <div className="flex items-center w-full mt-10 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+        <div className="flex items-center w-full mt-10 bg-white border border-[#1c9a91] h-12 rounded-full overflow-hidden pl-6 gap-2">
           <MdEmail />
           <input
             onChange={handleChange}
@@ -55,7 +55,7 @@ function Login() {
           />
         </div>
 
-        <div className="flex items-center mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+        <div className="flex items-center mt-4 w-full bg-white border border-[#1c9a91] h-12 rounded-full overflow-hidden pl-6 gap-2">
           <FaLock />
           <input
             onChange={handleChange}
@@ -70,7 +70,7 @@ function Login() {
             {show ? <IoEye /> : <IoMdEyeOff />}
           </span>
         </div>
-        <div className="mt-5 text-left text-indigo-500">
+        <div className="mt-5 text-left text-[#35aea6]">
           <a className="text-sm" href="#">
             Forgot password?
           </a>
@@ -78,7 +78,7 @@ function Login() {
 
         <button
           type="submit"
-          className="mt-2 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity"
+          className="mt-2 w-full h-11 font-semibold rounded-full text-white bg-[#3CB4AC] hover:opacity-90 transition-opacity"
         >
           Login
         </button>
