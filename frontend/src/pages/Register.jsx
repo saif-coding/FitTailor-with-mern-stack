@@ -25,7 +25,8 @@ function Register() {
     try {
       const result = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/users/register`,
-        registerData
+        registerData,
+        { withCredentials: true }
       );
       if (result.status === 201) {
         toast.success(result.data.message);

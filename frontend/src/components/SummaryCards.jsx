@@ -13,28 +13,28 @@ function SummaryCards() {
       value: 1250,
       icon: <FiUsers />,
       color: "white",
-      bg: "bg-red-600",
+      bg: "bg-blue-600",
     },
     {
       title: "New Orders",
       value: 35,
       icon: <FiPackage />,
       color: "white",
-      bg: "bg-green-600",
+      bg: "bg-yellow-600",
     },
     {
-      title: "Appointments",
+      title: "Pending",
       value: 8,
       icon: <FiCalendar />,
       color: "white",
-      bg: "bg-yellow-600",
+      bg: "bg-red-600",
     },
     {
       title: "Complete Orders",
       value: 344,
       icon: <FiMessageCircle />,
       color: "white",
-      bg: "bg-blue-600",
+      bg: "bg-green-600",
     },
   ];
   return (

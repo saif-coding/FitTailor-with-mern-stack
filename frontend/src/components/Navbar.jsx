@@ -1,7 +1,32 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { UserContext } from "../context/userContext";
 function Navbar() {
+  const { userData, setUserData } = useContext(UserContext);
+  console.log(userData, "userdata in navbar");
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  const userLogout = async () => {
+    try {
+      const result = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/logout`,
+        {},
+        { withCredentials: true }
+      );
+      if (result.status === 200) {
+        toast.success(result.data.message);
+        setUserData("");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
       <h className="text-3xl font-bold">Fit Tailor</h>
@@ -43,16 +68,44 @@ function Navbar() {
           </svg>
         </div>
 
-        <Link to={"/login"}>
-          <button className="cursor-pointer px-8 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
-            Login
-          </button>
-        </Link>
-        <Link to={"/dashboard"}>
-          <button className="cursor-pointer px-8 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
-            Dashboard
-          </button>
-        </Link>
+        {userData.name ? (
+          <Link to={"/dashboard"}>
+            <button className="cursor-pointer px-8 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
+              Dashboard
+            </button>
+          </Link>
+        ) : (
+          <Link to={"/login"}>
+            <button className="cursor-pointer px-8 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
+              Login
+            </button>
+          </Link>
+        )}
+
+        <div
+          onClick={() => setShow(!show)}
+          className="w-10 h-10 bg-red-500 overflow-hidden rounded-full"
+        >
+          <img
+            className=" object-cover w-full h-full"
+            src="https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt=""
+          />
+        </div>
+        {show && (
+          <div className="w-44 h-32 p-4  bg-gray-200 border absolute right-8 top-20 rounded-lg">
+            <p>Profile</p>
+            <p>Dashboard</p>
+            <Link>
+              <button
+                onClick={userLogout}
+                className="cursor-pointer absolute bottom-4 px-5 py-[5px] font-semibold bg-red-500 hover:bg-red-700 hover:text-white hover:border-black border transition text-white rounded-lg"
+              >
+                logout
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
 
       <button

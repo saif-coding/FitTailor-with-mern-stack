@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // only on HTTPS in production
-      sameSite: "Strict",
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.status(200).json({ message: "login successfully" });
@@ -54,4 +54,27 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registeUser, loginUser };
+const userLogout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "logout error" });
+  }
+};
+
+const getSingleUser = async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const user = await UserModel.findById(userId).select("-password");
+    if (!user) {
+      return res.status(400).json({ message: "user not found" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log("Error getting user:", error.message);
+    res.status(500).json({ message: "Server error while getting user" });
+  }
+};
+module.exports = { registeUser, loginUser, userLogout, getSingleUser };
