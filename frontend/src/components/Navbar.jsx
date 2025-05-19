@@ -27,6 +27,7 @@ function Navbar() {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
+
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
       <h className="text-3xl font-bold">Fit Tailor</h>
@@ -88,13 +89,15 @@ function Navbar() {
         >
           <img
             className=" object-cover w-full h-full"
-            src="https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src={userData.profileImage}
             alt=""
           />
         </div>
         {show && (
           <div className="w-44 h-32 p-4  bg-gray-200 border absolute right-8 top-20 rounded-lg">
-            <p>Profile</p>
+            <Link to={"/profile"}>
+              <p className=" cursor-pointer">Profile</p>
+            </Link>
             <p>Dashboard</p>
             <Link>
               <button

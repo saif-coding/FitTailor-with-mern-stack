@@ -1,6 +1,8 @@
 const { UserModel, registeValidate } = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const path = require("path");
+const uploadCloudinary = require("../middlewares/Cloudinary");
 
 const registeUser = async (req, res) => {
   try {
@@ -77,4 +79,29 @@ const getSingleUser = async (req, res) => {
     res.status(500).json({ message: "Server error while getting user" });
   }
 };
-module.exports = { registeUser, loginUser, userLogout, getSingleUser };
+
+const uploadProfilePicture = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const imagePath = await uploadCloudinary(req.file.path);
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { profileImage: imagePath },
+      { new: true }
+    );
+    res.status(200).json({
+      message: "Profile picture uploaded successfully",
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Image upload failed" });
+  }
+};
+module.exports = {
+  registeUser,
+  loginUser,
+  userLogout,
+  getSingleUser,
+  uploadProfilePicture,
+};

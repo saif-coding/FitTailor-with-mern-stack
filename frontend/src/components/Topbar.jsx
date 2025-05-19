@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 function Topbar() {
+  const { userData } = useContext(UserContext);
   return (
     <div className="flex justify-between items-center p-4 bg-white shadow-md">
       <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
@@ -13,7 +15,7 @@ function Topbar() {
         </Link>
         {/* <FiBell className="text-xl text-gray-600" /> */}
         <img
-          src="https://i.pravatar.cc/40"
+          src={userData.profileImage}
           alt="Admin"
           className="w-10 h-10 rounded-full"
         />
