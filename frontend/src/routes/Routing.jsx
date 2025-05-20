@@ -7,6 +7,8 @@ import About from "./../pages/About";
 import Contact from "../pages/Contact";
 import Dashboard from "./../pages/Dashboard";
 import Profile from "../pages/Profile";
+import Customer from "../pages/Customers";
+import CustomerTwo from "./../pages/CustomerTwo";
 function Routing() {
   return (
     <>
@@ -18,6 +20,8 @@ function Routing() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/customer" element={<Customer />}></Route>
+        <Route path="/customertwo" element={<CustomerTwo />}></Route>
       </Routes>
     </>
   );

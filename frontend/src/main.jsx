@@ -3,10 +3,13 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import UserContextProvider from "./context/userContext.jsx";
+import CustomerContextProvider from "./context/CustomerContext.jsx";
 createRoot(document.getElementById("root")).render(
-  <UserContextProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </UserContextProvider>
+  <BrowserRouter>
+    <CustomerContextProvider>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </CustomerContextProvider>
+  </BrowserRouter>
 );
