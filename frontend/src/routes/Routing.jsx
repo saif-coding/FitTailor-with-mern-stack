@@ -9,6 +9,7 @@ import Dashboard from "./../pages/Dashboard";
 import Profile from "../pages/Profile";
 import Customer from "../pages/Customers";
 import CustomerTwo from "./../pages/CustomerTwo";
+import CustomerDetails from "../pages/CustomerDetails";
 function Routing() {
   return (
     <>
@@ -22,6 +23,10 @@ function Routing() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/customer" element={<Customer />}></Route>
         <Route path="/customertwo" element={<CustomerTwo />}></Route>
+        <Route
+          path="/customerdetails/:id"
+          element={<CustomerDetails />}
+        ></Route>
       </Routes>
     </>
   );

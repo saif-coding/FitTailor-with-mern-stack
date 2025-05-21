@@ -1,10 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 export const CustomerContext = createContext();
 function CustomerContextProvider({ children }) {
   const navigate = useNavigate();
+  const [allCustomer, setAllCustomer] = useState([]);
+  console.log(allCustomer);
   const [customerData, setCustomerData] = useState({
     length: "",
     chest: "",
@@ -40,9 +42,31 @@ function CustomerContextProvider({ children }) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
+
+  const getAllCustomer = async () => {
+    try {
+      const result = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/customer/getallcustomer`,
+        { withCredentials: true }
+      );
+      setAllCustomer(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getAllCustomer();
+  }, []);
+
   return (
     <CustomerContext.Provider
-      value={{ customerData, setCustomerData, submitHandler }}
+      value={{
+        customerData,
+        setCustomerData,
+        submitHandler,
+        allCustomer,
+        setAllCustomer,
+      }}
     >
       {children}
     </CustomerContext.Provider>

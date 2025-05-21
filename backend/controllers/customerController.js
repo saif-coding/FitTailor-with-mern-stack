@@ -3,6 +3,9 @@ const customerModel = require("../models/customerModel");
 const addCustomer = async (req, res) => {
   try {
     const {
+      name,
+      email,
+      phone,
       length,
       chest,
       shoulder,
@@ -19,6 +22,9 @@ const addCustomer = async (req, res) => {
       daman,
     } = req.body;
     const customer = new customerModel({
+      name,
+      email,
+      phone,
       length,
       chest,
       shoulder,
@@ -42,4 +48,53 @@ const addCustomer = async (req, res) => {
   }
 };
 
-module.exports = { addCustomer };
+const getAllCustomer = async (req, res) => {
+  try {
+    const allCustomer = await customerModel.find().sort({ createdAt: -1 });
+    return res.status(200).json(allCustomer);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+const getSingleCustomer = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const customer = await customerModel.findById(id);
+    if (!customer)
+      return res.status(404).json({ message: "customer not found" });
+    res.json(customer);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+const markAsComplete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { status } = req.body;
+
+    const updatedCustomer = await customerModel.findByIdAndUpdate(
+      id,
+      { status: "complete" },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Customer marked as complete",
+      customer: updatedCustomer,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating status" });
+  }
+};
+
+module.exports = {
+  addCustomer,
+  getAllCustomer,
+  getSingleCustomer,
+  markAsComplete,
+};

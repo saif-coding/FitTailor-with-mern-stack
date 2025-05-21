@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 import { UserContext } from "../context/userContext";
 function Navbar() {
   const { userData, setUserData } = useContext(UserContext);
-  console.log(userData, "userdata in navbar");
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();

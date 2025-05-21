@@ -1,23 +1,11 @@
 import React from "react";
 import { FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
-
+import { CustomerContext } from "../context/CustomerContext";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 function CustomerTable() {
-  const customers = [
-    {
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "123-456-7890",
-      size: "1",
-      joined: "2025-05-10",
-    },
-    {
-      name: "Jane Smith",
-      email: "jane@example.com",
-      phone: "987-654-3210",
-      size: "2",
-      joined: "2025-05-12",
-    },
-  ];
+  const { allCustomer } = useContext(CustomerContext);
+
   return (
     <div className="p-4 overflow-x-auto">
       <table className="w-full min-w-[600px] bg-white rounded-xl overflow-hidden shadow-md">
@@ -32,14 +20,19 @@ function CustomerTable() {
           </tr>
         </thead>
         <tbody>
-          {customers.map((cust, idx) => (
+          {allCustomer.map((cust, idx) => (
             <tr key={idx} className="border-t text-sm">
-              <td className="p-3">{cust.size}</td>
+              <td className="p-3">{idx}</td>
               <td className="p-3">{cust.name}</td>
               <td className="p-3">{cust.email}</td>
               <td className="p-3">{cust.phone}</td>
-              <td className="p-3">{cust.joined}</td>
-              <td className="p-3 flex gap-2">
+              <td className="p-3">
+                {new Date(cust.createdAt).toLocaleDateString()}
+              </td>
+              <Link
+                to={`/customerdetails/${cust._id}`}
+                className="p-3 flex gap-2"
+              >
                 <button className="text-blue-500">
                   <FiEye />
                 </button>
@@ -49,7 +42,7 @@ function CustomerTable() {
                 <button className="text-red-500">
                   <FiTrash2 />
                 </button>
-              </td>
+              </Link>
             </tr>
           ))}
         </tbody>

@@ -3,7 +3,6 @@ export const UserContext = createContext();
 import axios from "axios";
 function UserContextProvider({ children }) {
   const [userData, setUserData] = useState([]);
-  console.log(userData, "user data");
   const getUser = async () => {
     try {
       const result = await axios.get(

@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   FiUsers,
   FiPackage,
   FiCalendar,
   FiMessageCircle,
 } from "react-icons/fi";
+import { CustomerContext } from "../context/CustomerContext";
 
 function SummaryCards() {
+  const { allCustomer } = useContext(CustomerContext);
+  const pendingCount = allCustomer.filter((c) => c.status === "pending").length;
+  const completeCount = allCustomer.filter(
+    (c) => c.status === "complete"
+  ).length;
+
   const cards = [
     {
       title: "Total Customers",
-      value: 1250,
+      value: allCustomer.length,
       icon: <FiUsers />,
       color: "white",
       bg: "bg-blue-600",
@@ -24,14 +31,14 @@ function SummaryCards() {
     },
     {
       title: "Pending",
-      value: 8,
+      value: pendingCount,
       icon: <FiCalendar />,
       color: "white",
       bg: "bg-red-600",
     },
     {
       title: "Complete Orders",
-      value: 344,
+      value: completeCount,
       icon: <FiMessageCircle />,
       color: "white",
       bg: "bg-green-600",

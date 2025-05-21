@@ -7,7 +7,11 @@ function Customer() {
   const navigate = useNavigate();
 
   const elements = [
-    { label: "Length", name: "length", placeholder: "e.g., 40 inches" },
+    { label: "Name", name: "name", placeholder: "Name" },
+    { label: "Email", name: "email", placeholder: "Email" },
+    { label: "Phone", name: "phone", placeholder: "Phone" },
+    { label: "Kameez Length", name: "length", placeholder: "e.g., 40 inches" },
+
     { label: "Chest", name: "chest", placeholder: "e.g., 38 inches" },
     {
       label: "Shoulder",
@@ -64,7 +68,7 @@ function Customer() {
                 {field.label}
               </label>
               <input
-                type="number"
+                type="text"
                 name={field.name}
                 value={customerData[field.name]}
                 onChange={handleChange}

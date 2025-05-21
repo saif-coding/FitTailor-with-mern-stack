@@ -8,7 +8,7 @@ function Topbar() {
     <div className="flex justify-between items-center p-4 bg-white shadow-md">
       <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
       <div className="flex items-center gap-4">
-        <Link to={"/"}>
+        <Link to={"/customer"}>
           <button className="cursor-pointer px-4 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
             Add Customer
           </button>
