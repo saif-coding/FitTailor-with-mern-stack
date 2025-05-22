@@ -6,8 +6,11 @@ export const CustomerContext = createContext();
 function CustomerContextProvider({ children }) {
   const navigate = useNavigate();
   const [allCustomer, setAllCustomer] = useState([]);
-  console.log(allCustomer);
+  const [updatedData, setUpdatedData] = useState([]);
   const [customerData, setCustomerData] = useState({
+    name: "",
+    email: "",
+    phone: "",
     length: "",
     chest: "",
     shoulder: "",
@@ -24,25 +27,6 @@ function CustomerContextProvider({ children }) {
     daman: "",
   });
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const result = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/customer/add`,
-        customerData,
-        { withCredentials: true }
-      );
-      if (result.status === 201) {
-        toast.success(result.data.message);
-        navigate("/dashboard");
-      }
-      console.log(result.data);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data?.message || "Something went wrong");
-    }
-  };
-
   const getAllCustomer = async () => {
     try {
       const result = await axios.get(
@@ -58,6 +42,25 @@ function CustomerContextProvider({ children }) {
     getAllCustomer();
   }, []);
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/customer/add`,
+        customerData,
+        { withCredentials: true }
+      );
+      if (result.status === 201) {
+        toast.success(result.data.message);
+        await getAllCustomer();
+        navigate("/dashboard");
+      }
+      console.log(result.data);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
   return (
     <CustomerContext.Provider
       value={{
@@ -66,6 +69,9 @@ function CustomerContextProvider({ children }) {
         submitHandler,
         allCustomer,
         setAllCustomer,
+        updatedData,
+        setUpdatedData,
+        getAllCustomer,
       }}
     >
       {children}

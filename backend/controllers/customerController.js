@@ -92,9 +92,77 @@ const markAsComplete = async (req, res) => {
   }
 };
 
+const updateSingleCustomer = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const {
+      name,
+      email,
+      phone,
+      length,
+      chest,
+      shoulder,
+      neck,
+      sleeve,
+      shalwar,
+      pancha,
+      waist,
+      celler,
+      frontpocket,
+      leftpocket,
+      rightpocket,
+      jents,
+      daman,
+    } = req.body;
+    const update = await customerModel.findByIdAndUpdate(
+      id,
+      {
+        name,
+        email,
+        phone,
+        length,
+        chest,
+        shoulder,
+        neck,
+        sleeve,
+        shalwar,
+        pancha,
+        waist,
+        celler,
+        frontpocket,
+        leftpocket,
+        rightpocket,
+        jents,
+        daman,
+      },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ message: "Customer details updated", customer: update });
+  } catch (error) {
+    res.status(500).json({ message: "Update failed" });
+  }
+};
+
+const deleteSingleCustomer = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleting = await customerModel.findByIdAndDelete(id);
+    if (!deleting) {
+      return res.status(400).json({ message: "customer is not found" });
+    }
+    res.status(200).json({ message: "customer delete" });
+  } catch (error) {
+    res.status(500).json({ message: "delete failed" });
+  }
+};
+
 module.exports = {
   addCustomer,
   getAllCustomer,
   getSingleCustomer,
   markAsComplete,
+  updateSingleCustomer,
+  deleteSingleCustomer,
 };

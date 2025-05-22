@@ -29,18 +29,10 @@ function CustomerTable() {
               <td className="p-3">
                 {new Date(cust.createdAt).toLocaleDateString()}
               </td>
-              <Link
-                to={`/customerdetails/${cust._id}`}
-                className="p-3 flex gap-2"
-              >
-                <button className="text-blue-500">
+              <Link to={`/customerdetails/${cust._id}`}>
+                <button className="text-blue-500 p-3 cursor-pointer font-bold flex items-center justify-center gap-3">
                   <FiEye />
-                </button>
-                <button className="text-green-500">
-                  <FiEdit />
-                </button>
-                <button className="text-red-500">
-                  <FiTrash2 />
+                  View
                 </button>
               </Link>
             </tr>

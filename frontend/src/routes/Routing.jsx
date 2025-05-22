@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import Customer from "../pages/Customers";
 import CustomerTwo from "./../pages/CustomerTwo";
 import CustomerDetails from "../pages/CustomerDetails";
+import CustomerUpdate from "../pages/CustomerUpdate";
 function Routing() {
   return (
     <>
@@ -27,6 +28,7 @@ function Routing() {
           path="/customerdetails/:id"
           element={<CustomerDetails />}
         ></Route>
+        <Route path="/customer/update/:id" element={<CustomerUpdate />}></Route>
       </Routes>
     </>
   );
