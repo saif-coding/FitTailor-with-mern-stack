@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 export const CustomerContext = createContext();
 function CustomerContextProvider({ children }) {
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const [allCustomer, setAllCustomer] = useState([]);
   const [updatedData, setUpdatedData] = useState([]);
@@ -72,6 +73,8 @@ function CustomerContextProvider({ children }) {
         updatedData,
         setUpdatedData,
         getAllCustomer,
+        search,
+        setSearch,
       }}
     >
       {children}

@@ -2,11 +2,9 @@ import React from "react";
 
 function Services() {
   const services = [
-    "Custom Suit Tailoring",
+    "Custom Shalwar Kameez",
     "Measurement & Fitting",
-    "Fabric Selection",
-    "Alterations",
-    "Home Pickup/Delivery",
+    "Custom Suit Tailoring",
   ];
   return (
     <div>

@@ -7,8 +7,10 @@ import { IoEye } from "react-icons/io5";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { UserContext } from "../context/userContext";
+import { CustomerContext } from "../context/CustomerContext";
 function Login() {
-  const { setUserData, userData, getUser } = useContext(UserContext);
+  const { getUser } = useContext(UserContext);
+  const { getAllCustomer } = useContext(CustomerContext);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [loginData, setLoginData] = useState({
@@ -30,7 +32,8 @@ function Login() {
       if (result.status == 200) {
         toast.success(result.data.message);
         await getUser(); // refetch user after login
-        navigate("/");
+        await getAllCustomer(); // refetch user after login
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error(error);

@@ -1,9 +1,13 @@
 import React, { useContext, useState, useRef } from "react";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { FaCamera } from "react-icons/fa";
+
 const Profile = () => {
   const imagef = useRef();
   const [file, setFile] = useState(null);
+  console.log(file, "file checking");
   const { userData, setUserData } = useContext(UserContext);
 
   const handleUpload = async () => {
@@ -19,25 +23,31 @@ const Profile = () => {
         }
       );
       setUserData(res.data.user); // Update user data with new image
-      alert("Profile picture updated successfully!");
+      toast.success("Profile picture updated successfully!");
     } catch (err) {
       console.error(err);
-      alert("Upload failed.");
+      toast.error("Upload failed.");
     }
   };
   return (
     <div className="max-w-3xl mx-auto border mt-8 h-[400px] px-4 py-8">
       <div className="bg-white flex-col shadow-lg rounded-xl p-6 h-full sm:flex  gap-6">
         <div className=" relative flex items-center justify-between sm:mx-0 w-full">
-          <img
-            onClick={(e) => imagef.current.click()}
-            src={userData?.profileImage}
-            alt="Profile"
-            className="h-32 w-32 rounded-full object-cover border-4 border-[#3CB4AC]"
-          />
-          <p className=" text-4xl font-bold absolute top-12 text-blue-600 left-22">
-            +
-          </p>
+          <div className="relative w-40 h-40 group rounded-full overflow-hidden cursor-pointer">
+            <img
+              src={userData?.profileImage}
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
+
+            {/* Overlay with Camera Icon */}
+            <div
+              onClick={(e) => imagef.current.click()}
+              className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-70 transition-opacity duration-300"
+            >
+              <FaCamera className="text-white text-2xl" />
+            </div>
+          </div>
           <div className="w-40 h-32 text-white flex flex-col gap-8 justify-center rounded-lg">
             <input
               ref={imagef}
@@ -47,13 +57,16 @@ const Profile = () => {
               onChange={(e) => setFile(e.target.files[0])}
               className="border px-4 py-2 "
             />
-            <button
-              disabled={!file}
-              onClick={handleUpload}
-              className="bg-[#3CB4AC] text-white px-1 w-36 text-sm py-2 rounded hover:bg-[#16fef4] hover:text-black"
-            >
-              Upload Profile Image
-            </button>
+
+            {file && (
+              <button
+                disabled={!file}
+                onClick={handleUpload}
+                className="bg-[#3CB4AC] text-white px-1 w-36 text-sm py-2 rounded hover:bg-[#16fef4] hover:text-black"
+              >
+                Upload Profile Image
+              </button>
+            )}
           </div>
         </div>
 

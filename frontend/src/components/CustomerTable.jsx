@@ -4,8 +4,12 @@ import { CustomerContext } from "../context/CustomerContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 function CustomerTable() {
-  const { allCustomer } = useContext(CustomerContext);
-
+  const { allCustomer, search } = useContext(CustomerContext);
+  const filterSearch = allCustomer.filter(
+    (item) =>
+      item.name.toLowerCase().includes(search.trim().toLowerCase()) ||
+      item.phone.toString().includes(search.trim())
+  );
   return (
     <div className="p-4 overflow-x-auto">
       <table className="w-full min-w-[600px] bg-white rounded-xl overflow-hidden shadow-md">
@@ -20,7 +24,7 @@ function CustomerTable() {
           </tr>
         </thead>
         <tbody>
-          {allCustomer.map((cust, idx) => (
+          {filterSearch.map((cust, idx) => (
             <tr key={idx} className="border-t text-sm">
               <td className="p-3">{idx}</td>
               <td className="p-3">{cust.name}</td>
