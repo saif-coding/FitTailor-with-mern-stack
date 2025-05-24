@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const customerSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true},
+    name: { type: String, required: true },
     email: { type: String },
     phone: { type: String },
     length: { type: String },
@@ -19,8 +19,11 @@ const customerSchema = new mongoose.Schema(
     rightpocket: { type: String },
     jents: { type: String },
     daman: { type: String },
-
-    // Add status field to track progress
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     status: {
       type: String,
       enum: ["pending", "complete"],

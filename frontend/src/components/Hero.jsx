@@ -6,8 +6,9 @@ function Hero() {
     <section className="bg-[#1E2A38] text-white px-14 py-16 md:flex md:items-center md:justify-between">
       {/* Left Content */}
       <div className="md:w-1/2 space-y-6">
-        <h1 className="text-4xl md:text-5xl font-bold text-[#D4AF37] leading-tight">
-          Precision Tailoring for the Modern Gentleman
+        <h1 className="text-4xl md:text-4xl font-bold text-[#D4AF37] leading-tight">
+          Tailor Management System – Track Dresses, Customers, Status &
+          Payments Easily
         </h1>
         <p className="text-[#F5F6F8] text-base md:text-lg">
           Experience the art of bespoke fashion. We craft each piece with

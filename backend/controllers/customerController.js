@@ -1,6 +1,7 @@
 const customerModel = require("../models/customerModel");
 
 const addCustomer = async (req, res) => {
+  const userId = req.user.userId;
   try {
     const {
       name,
@@ -39,6 +40,7 @@ const addCustomer = async (req, res) => {
       rightpocket,
       jents,
       daman,
+      user: userId,
     });
     await customer.save();
     return res.status(201).json({ message: "customer added successfuly" });
@@ -49,8 +51,11 @@ const addCustomer = async (req, res) => {
 };
 
 const getAllCustomer = async (req, res) => {
+  const userId = req.user.userId;
   try {
-    const allCustomer = await customerModel.find().sort({ createdAt: -1 });
+    const allCustomer = await customerModel
+      .find({ user: userId })
+      .sort({ createdAt: -1 });
     return res.status(200).json(allCustomer);
   } catch (error) {
     console.error(error.message);

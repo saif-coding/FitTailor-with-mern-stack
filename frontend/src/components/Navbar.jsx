@@ -65,11 +65,18 @@ function Navbar() {
             </button>
           </Link>
         ) : (
-          <Link to={"/login"}>
-            <button className="cursor-pointer px-8 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
-              Login
-            </button>
-          </Link>
+          <>
+            <Link to={"/login"}>
+              <button className="cursor-pointer px-8 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
+                Login
+              </button>
+            </Link>
+            <Link to={"/register"}>
+              <button className="cursor-pointer px-8 py-2 bg-[#3CB4AC] hover:bg-[#16fef4] hover:text-black hover:border-black border transition text-white rounded-full">
+                Register
+              </button>
+            </Link>
+          </>
         )}
 
         {userData.name && (

@@ -23,25 +23,25 @@ function SummaryCards() {
       bg: "bg-blue-600",
     },
     {
-      title: "New Orders",
-      value: 35,
-      icon: <FiPackage />,
-      color: "white",
-      bg: "bg-yellow-600",
-    },
-    {
-      title: "Pending",
+      title: "Pending Dress ",
       value: pendingCount,
       icon: <FiCalendar />,
       color: "white",
       bg: "bg-red-600",
     },
     {
-      title: "Complete Orders",
+      title: "Complete Dress ",
       value: completeCount,
       icon: <FiMessageCircle />,
       color: "white",
       bg: "bg-green-600",
+    },
+    {
+      title: "Total Amounts",
+      value: "$  435",
+      icon: <FiPackage />,
+      color: "white",
+      bg: "bg-yellow-600",
     },
   ];
   return (
@@ -49,7 +49,7 @@ function SummaryCards() {
       {cards.map((card, i) => (
         <div
           key={i}
-          className={` p-6 rounded-2xl ${card.bg} shadow-md  flex items-center gap-4`}
+          className={` p-6 rounded-2xl ${card.bg} shadow-md  flex items-cente gap-4`}
         >
           <div className={`text-3xl text-${card.color}`}>{card.icon}</div>
           <div>
