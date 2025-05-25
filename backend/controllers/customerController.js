@@ -1,5 +1,6 @@
 const customerModel = require("../models/customerModel");
-
+const uploadCloudinary = require("../middlewares/Cloudinary");
+const path = require("path");
 const addCustomer = async (req, res) => {
   const userId = req.user.userId;
   try {
@@ -40,6 +41,8 @@ const addCustomer = async (req, res) => {
       rightpocket,
       jents,
       daman,
+      payments: [],
+      dressImages: [],
       user: userId,
     });
     await customer.save();
@@ -163,6 +166,31 @@ const deleteSingleCustomer = async (req, res) => {
   }
 };
 
+const dressAndPrice = async (req, res) => {
+  // const userId = req.user.userId;
+  const id = req.params.id;
+  const { payments } = req.body;
+  const imagePath = await uploadCloudinary(req.file.path);
+
+  try {
+    const dessPrice = await customerModel.findByIdAndUpdate(
+      id,
+      { $push: { payments: payments, dressImages: imagePath } },
+      { new: true }
+    );
+    if (!dessPrice)
+      return res.status(404).json({ message: "Customer not found" });
+    res
+      .status(200)
+      .json({ message: "Payment and Price added successfully", dessPrice });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error adding payment and price",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   addCustomer,
   getAllCustomer,
@@ -170,4 +198,5 @@ module.exports = {
   markAsComplete,
   updateSingleCustomer,
   deleteSingleCustomer,
+  dressAndPrice,
 };

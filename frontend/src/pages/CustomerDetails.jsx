@@ -4,16 +4,15 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { CustomerContext } from "../context/CustomerContext";
 function CustomerDetails() {
-  const image = useRef();
+  const [dressData, setDressData] = useState([]);
   const [file, setFile] = useState("");
   const [price, setPrice] = useState("");
-  console.log(file, price);
-  // const image = useRef();
-  const { getAllCustomer } = useContext(CustomerContext);
+  const { getAllCustomer, allCustomer } = useContext(CustomerContext);
+  // console.log(allCustomer, "here")
   const { id } = useParams(); // /customer/:id
   const navigate = useNavigate();
   const [customer, setCustomer] = useState([]);
-
+  console.log(customer.payments, "hey we go");
   const fetchCustomer = async () => {
     try {
       const res = await axios.get(
@@ -76,20 +75,23 @@ function CustomerDetails() {
     formdata.append("dressImages", file);
     formdata.append("payments", price);
     try {
-      const result = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/dress/added`,
+      const result = await axios.put(
+        `${import.meta.env.VITE_BASE_URL}/customer/updated/${id}`,
         formdata,
         { withCredentials: true }
       );
-      if (result.status === 201) {
-        console.log(result.data);
-        alert("image uploaded");
+      if (result.status === 200) {
+        toast.success(result.data.message);
+        console.log(result);
+        setFile("");
+        setPrice("");
       }
     } catch (error) {
       console.error(error);
-      alert("image not upload");
+      toast.error(error.result.data.message);
     }
   };
+
   if (!customer) return <div className="p-6">Loading...</div>;
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
@@ -101,7 +103,7 @@ function CustomerDetails() {
       <h2 className="text-2xl font-bold mb-4 text-center">Customer Details</h2>
 
       <div className="mb-6 space-y-2 border md:flex justify-between p-8">
-        <div className=" flex flex-col gap-3">
+        <div className=" flex flex-col gap-8 justify-center">
           <p>
             <strong>Name:</strong> <span className="ml-7">{customer.name}</span>
           </p>
@@ -130,8 +132,8 @@ function CustomerDetails() {
             </span>
           </p>
         </div>
-        <div className=" w-66 overflow-hidden bg-amber-300 p-2 rounded-xl flex justify-between">
-          <div className="py-1 flex flex-col w-32 justify-between bg-white">
+        <div className=" w-[50%] h-72 overflow-hidden border p-2 rounded-xl flex justify-between">
+          <div className="py-1 flex flex-col w-96 justify-between bg-white">
             <div className="md:p-3 p-4 space-y-5 max-w-lg ">
               <div>
                 <p className="text-base font-medium">Dress Image</p>
@@ -174,30 +176,34 @@ function CustomerDetails() {
               </button>
             </div>
           </div>
-          <div className="bg-green-400 w-full h-full">ryw</div>
-          {/* <div className="w-full flex bg-amber-800 justify-between">
-            <div className=" overflow-hidden">
-              <p className=" font-bold text-1xl ">Dress Color</p>
-              <input
-                className=" border w-10"
-                ref={image}
-                onChange={(e) => setFile(e.target.files[0])}
-                hidden
-                type="file"
-              />
-              <img
-                onClick={(e) => image.current.click()}
-                className="bg-gray-300 cursor-pointer w-full h-20 rounded-xl object-cover"
-                src=""
-                alt=" "
-              />
+          <div className=" w-full border text-center overflow-scroll overflow-x-hidden flex flex-col items-center gap-3 p-3 h-full">
+            <div>
+              {customer.dressImages && customer.dressImages.length > 0 ? (
+                customer.dressImages.map((image, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      border: "1px solid #ccc",
+                      padding: "10px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <img
+                      src={image}
+                      alt={`Dress ${index}`}
+                      style={{ width: "200px", height: "auto" }}
+                    />
+                    <p>Price: ${customer.payments[index] ?? "N/A"}</p>
+                    <p className="mt-3">
+                      {new Date(customer.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p>No dress images & Price available.</p>
+              )}
             </div>
-            <button>save</button>
-            <div className="bg-yellow-50 w-32">
-              <p>price</p>
-              <input type="text" placeholder="price" />
-            </div>
-          </div> */}
+          </div>
         </div>
       </div>
 

@@ -29,6 +29,14 @@ const customerSchema = new mongoose.Schema(
       enum: ["pending", "complete"],
       default: "pending",
     },
+    dressImages: {
+      type: [String], // Array of image URLs
+      default: [],
+    },
+    payments: {
+      type: [Number], // Array of payment amounts
+      default: [],
+    },
   },
   { timestamps: true }
 );
