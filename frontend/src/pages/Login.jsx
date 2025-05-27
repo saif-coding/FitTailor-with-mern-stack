@@ -76,10 +76,10 @@ function Login() {
             {show ? <IoEye /> : <IoMdEyeOff />}
           </span>
         </div>
-        <div className="mt-5 text-left text-[#35aea6]">
-          <a className="text-sm" href="#">
+        <div className="mt-5 text-left text-blue-600 font-semibold">
+          <Link to={"/forgot-password"} className="text-sm">
             Forgot password?
-          </a>
+          </Link>
         </div>
 
         <button

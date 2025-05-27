@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
 // Reusable mailer function
-async function sendEmail() {
+async function sendEmail({ to, subject, html }) {
   // Setup transporter
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -14,9 +14,9 @@ async function sendEmail() {
   // Mail options
   const mailOptions = {
     from: "topmentorsline@gmail.com",
-    to: "saifullaha730@gmail.com",
-    subject: "Welcome to Our Service!",
-    html: "<h3>Hello</h3>",
+    to: to,
+    subject: subject,
+    html: html,
   };
 
   // Send email

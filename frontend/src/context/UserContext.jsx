@@ -3,6 +3,7 @@ export const UserContext = createContext();
 import axios from "axios";
 function UserContextProvider({ children }) {
   const [userData, setUserData] = useState([]);
+  const [restToken, setRestToken] = useState("");
   const getUser = async () => {
     try {
       const result = await axios.get(
@@ -20,7 +21,9 @@ function UserContextProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, getUser }}>
+    <UserContext.Provider
+      value={{ userData, setUserData, getUser, setRestToken, restToken }}
+    >
       {children}
     </UserContext.Provider>
   );

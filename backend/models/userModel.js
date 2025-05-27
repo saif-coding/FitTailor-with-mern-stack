@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "", // path or url
     },
+    resetToken: { type: String, default: null },
+    resetExpires: { type: Date, default: null },
   },
   { timestamps: true }
 );

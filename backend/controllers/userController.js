@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const uploadCloudinary = require("../middlewares/Cloudinary");
+const sendEmail = require("../middlewares/nodemailer");
+const crypto = require("crypto");
 
 const registeUser = async (req, res) => {
   try {
@@ -98,10 +100,66 @@ const uploadProfilePicture = async (req, res) => {
     res.status(500).json({ message: "Image upload failed" });
   }
 };
+
+// 🔑 Forgot Password Route
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await UserModel.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetToken = resetToken;
+    user.resetExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
+    const html = `
+      <h3>Password Reset Request</h3>
+      <p>Click the link to reset your password:</p>
+      <a href="${resetLink}">${resetLink}</a>
+      <p>Link expires in 1 hour.</p>
+    `;
+
+    await sendEmail({ to: user.email, subject: "Reset Your Password", html });
+
+    res.status(200).json({ message: "Password reset email sent!" });
+  } catch (error) {
+    console.error("Error in forgot-password:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { newPassword } = req.body;
+  try {
+    const user = await UserModel.findOne({
+      resetToken: token,
+      resetExpires: { $gt: Date.now() },
+    });
+
+    if (!user)
+      return res.status(400).json({ message: "Invalid or expired token" });
+
+    user.password = newPassword; // Will be hashed automatically
+    user.resetToken = undefined;
+    user.resetExpires = undefined;
+    await user.save();
+
+    res.json({ message: "Password reset successful!" });
+  } catch (error) {
+    console.error("Error in reset-password:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 module.exports = {
   registeUser,
   loginUser,
   userLogout,
   getSingleUser,
   uploadProfilePicture,
+  forgotPassword,
+  resetPassword,
 };

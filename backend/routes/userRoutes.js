@@ -9,6 +9,8 @@ const {
   userLogout,
   getSingleUser,
   uploadProfilePicture,
+  forgotPassword,
+  resetPassword
 } = require("../controllers/userController");
 
 router.post("/register", registeUser);
@@ -16,7 +18,8 @@ router.post("/login", loginUser);
 router.post("/logout", userLogout);
 router.get("/singleuser", auth, getSingleUser);
 router.put("/upload", auth, upload.single("profileImage"), uploadProfilePicture);
-
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 router.post("/email", sendEmail); //this api for email sender it working
 
 

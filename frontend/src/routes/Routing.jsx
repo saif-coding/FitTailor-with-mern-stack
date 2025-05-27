@@ -11,6 +11,8 @@ import Customer from "../pages/Customers";
 import CustomerTwo from "./../pages/CustomerTwo";
 import CustomerDetails from "../pages/CustomerDetails";
 import CustomerUpdate from "../pages/CustomerUpdate";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 import { UserContext } from "../context/userContext";
 function Routing() {
   const { userData } = useContext(UserContext);
@@ -54,6 +56,8 @@ function Routing() {
             userData.name ? <CustomerUpdate /> : <Navigate to={"/login"} />
           }
         ></Route>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </>
   );
