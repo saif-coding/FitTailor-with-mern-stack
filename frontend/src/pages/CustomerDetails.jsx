@@ -12,7 +12,7 @@ function CustomerDetails() {
   const { id } = useParams(); // /customer/:id
   const navigate = useNavigate();
   const [customer, setCustomer] = useState([]);
-  console.log(customer.payments, "hey we go");
+  
   const fetchCustomer = async () => {
     try {
       const res = await axios.get(
@@ -82,7 +82,6 @@ function CustomerDetails() {
       );
       if (result.status === 200) {
         toast.success(result.data.message);
-        console.log(result);
         setFile("");
         setPrice("");
       }

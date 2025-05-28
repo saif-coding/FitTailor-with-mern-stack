@@ -118,7 +118,7 @@ const forgotPassword = async (req, res) => {
     const html = `
       <h3>Password Reset Request</h3>
       <p>Click the link to reset your password:</p>
-      <a href="${resetLink}">${resetLink}</a>
+      <Link>${resetLink}</Link>
       <p>Link expires in 1 hour.</p>
     `;
 
