@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { CustomerContext } from "../context/CustomerContext";
