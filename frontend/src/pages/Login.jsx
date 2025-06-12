@@ -6,7 +6,7 @@ import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import { CustomerContext } from "../context/CustomerContext";
 function Login() {
   const { getUser } = useContext(UserContext);

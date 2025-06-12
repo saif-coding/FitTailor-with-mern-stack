@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 const ResetPassword = () => {
   const { token } = useParams(); // Get token from URL
   const [newPassword, setNewPassword] = useState("");

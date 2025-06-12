@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import { useLocation } from "react-router-dom";
 
 function Navbar() {
