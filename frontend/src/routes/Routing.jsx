@@ -13,7 +13,7 @@ import CustomerDetails from "../pages/CustomerDetails";
 import CustomerUpdate from "../pages/CustomerUpdate";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext.jsx";
 function Routing() {
   const { userData } = useContext(UserContext);
   return (
